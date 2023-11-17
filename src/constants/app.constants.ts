@@ -8,6 +8,7 @@ export const colors = {
     border: '#94969B',
     white: '#f2f2fb',
     offwhite: '#fcfcfc',
+    red: '#ff0000'
 };
 
 export default {

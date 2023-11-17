@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet,  View} from 'react-native';
 import React, {useState} from 'react';
 import ScreenContainer from '../components/screen-container';
 import Logo from '../components/logo';
@@ -6,88 +6,126 @@ import {colors} from '../constants/app.constants';
 import TextBox from '../components/textbox';
 import CustomButton from '../components/custom-button';
 import ClickableText from '../components/clickable-text';
+import {Formik} from 'formik';
+import * as yup from 'yup';
+
+
+
+const validationSchema = yup.object().shape({
+  userName: yup.string().required('User name is required'),
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  email: yup.string().required('Email is required'),
+  password: yup
+    .string()
+    .required('Password id required')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
+    ),
+});
+
+interface formInput {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
 const Signup = ({navigation}) => {
-  const [username, setUsername] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [isSecurePassword, setIsSecurePassword] = useState(false);
 
-  const [isUsernameFocused, setIsUsernameFocused] = useState(false);
-  const [isFirstnameFocused, setIsFirstnameFocused] = useState(false);
-  const [isLastnameFocused, setIsLastnameFocused] = useState(false);
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const intialValues: formInput = {
+    userName: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  };
 
+  const iconPressed = () => {
+    setIsSecurePassword(!isSecurePassword);
+  };
 
+  const onSignUp = () => {
+    Alert.alert('Registered successfully');
+  };
 
-
-
-
- const onSignUp = ()=>{
-  Alert.alert('Registered successfully')
- };
-
-const onSignIn = ()=>{
-  navigation.navigate('Signinpage')
-};
+  const onSignIn = () => {
+    navigation.navigate('Signinpage');
+  };
   return (
     <ScreenContainer>
       <View style={styles.screen}>
         <Logo />
-        <View style={styles.container}>
-        <TextBox
-            placeholder={'Username'}
-            secureTextEntry={false}
-            onChangeText={(value: string) => setUsername(value)}
-            onFocus={() => setIsUsernameFocused(true)}
-            onBlur={() => setIsUsernameFocused(false)}
-            style={isUsernameFocused && {borderColor: colors.primary}}
-          />
-          <TextBox
-            placeholder={'First Name'}
-            secureTextEntry={false}
-            onChangeText={(value: string) => setFirstname(value)}
-            onFocus={() => setIsFirstnameFocused(true)}
-            onBlur={() => setIsFirstnameFocused(false)}
-            style={isFirstnameFocused && {borderColor: colors.primary}}
-          />
-          <TextBox
-            placeholder={'Last Name'}
-            secureTextEntry={false}
-            onChangeText={(value: string) => setLastname(value)}
-            onFocus={() => setIsLastnameFocused(true)}
-            onBlur={() => setIsLastnameFocused(false)}
-            style={isLastnameFocused && {borderColor: colors.primary}}
-          />
-          <TextBox
-            placeholder={'Email'}
-            secureTextEntry={false}
-            onChangeText={(value: string) => setEmail(value)}
-            onFocus={() => setIsEmailFocused(true)}
-            onBlur={() => setIsEmailFocused(false)}
-            style={isEmailFocused && {borderColor: colors.primary}}
-          />
-          <TextBox
-            placeholder={'Password'}
-            secureTextEntry={true}
-            onChangeText={(value: string) => setPassword(value)}
-            onFocus={() => setIsPasswordFocused(true)}
-            onBlur={() => setIsPasswordFocused(false)}
-            style={isPasswordFocused && {borderColor: colors.primary}}
-          />
 
-        </View>
-          <CustomButton 
-          onPress={onSignUp} 
-          title={'Sign Up'} />
+        <Formik
+          initialValues={intialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSignUp}>
+          {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+            <>
+              <TextBox
+                placeholder={'Username'}
+                onChangedText={handleChange('username')}
+                onBlur={handleBlur('username')}
+                value={values.userName}
+                textStyle={{
+                  borderColor: errors.email ? colors.red : colors.primary,
+                }}
+              />
+              <TextBox
+                placeholder={'Username'}
+                onChangedText={handleChange('username')}
+                onBlur={handleBlur('username')}
+                value={values.userName}
+                textStyle={{
+                  borderColor: errors.email ? colors.red : colors.primary,
+                }}
+              />
+              <TextBox
+                placeholder={'Username'}
+                onChangedText={handleChange('username')}
+                onBlur={handleBlur('username')}
+                value={values.userName}
+                textStyle={{
+                  borderColor: errors.email ? colors.red : colors.primary,
+                }}
+              />
+              <TextBox
+                placeholder={'Email'}
+                onChangedText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                textStyle={{
+                  borderColor: errors.email ? colors.red : colors.primary,
+                }}
+              />
+              <TextBox
+                onIconPressed={iconPressed}
+                placeholder={'Password'}
+                onChangedText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                textSecure={isSecurePassword}
+                toggleIcon={
+                  isSecurePassword ? 'eye-slash' : 'eye'
+                }
+                textStyle={{
+                  borderColor: errors.password ? colors.red : colors.primary,
+                }}
+              />
+              <CustomButton onPress={handleSubmit} title={'Sign Up'} />
 
-        <ClickableText 
-        onPress={onSignIn}
-         title={'Go back to sign in'}
-         style={{color:colors.primary}}
-         />
+              <ClickableText
+                onPress={onSignIn}
+                title={'Go back to sign in'}
+                style={{color: colors.primary}}
+              />
+            </>
+          )}
+        </Formik>
       </View>
     </ScreenContainer>
   );
@@ -100,5 +138,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.offwhite,
   },
-
 });

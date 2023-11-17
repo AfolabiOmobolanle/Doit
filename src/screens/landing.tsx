@@ -2,7 +2,6 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import ScreenContainer from '../components/screen-container';
 import assets, {colors} from '../constants/app.constants';
-
 import Logo from '../components/logo';
 import CustomButton from '../components/custom-button';
 
