@@ -1,5 +1,5 @@
 import {Alert, StyleSheet,  View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ScreenContainer from '../components/screen-container';
 import Logo from '../components/logo';
 import {colors} from '../constants/app.constants';
@@ -8,6 +8,10 @@ import CustomButton from '../components/custom-button';
 import ClickableText from '../components/clickable-text';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import { getTodoByOwnerId, getTodos } from '../Api/api';
+import { getUser, getUserById } from '../Api/auth';
+import { getCategory } from '../Api/category';
+
 
 
 
@@ -44,6 +48,16 @@ const Signup = ({navigation}) => {
     password: '',
   };
 
+ useEffect(()  => {
+  console.log('results',getTodos())
+  // console.log('owner',getTodoByOwnerId('2'))
+  console.log('user',getUser())
+  // console.log('details',getUserById('3'))
+  console.log('category',getCategory())
+
+
+ }, [])
+ 
   const iconPressed = () => {
     setIsSecurePassword(!isSecurePassword);
   };
@@ -52,8 +66,13 @@ const Signup = ({navigation}) => {
     Alert.alert('Registered successfully');
   };
 
-  const onSignIn = () => {
+  const onSignIn = (form: formInput) => {
     navigation.navigate('Signinpage');
+
+    const onLoad = {
+        password: form.password,
+        email: form.email
+    }
   };
   return (
     <ScreenContainer>
@@ -139,3 +158,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offwhite,
   },
 });
+
