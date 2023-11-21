@@ -49,11 +49,11 @@ const Signup = ({navigation}) => {
   };
 
  useEffect(()  => {
-  console.log('results',getTodos())
-  // console.log('owner',getTodoByOwnerId('2'))
-  console.log('user',getUser())
-  // console.log('details',getUserById('3'))
-  console.log('category',getCategory())
+  // console.log('results',getTodos())
+  console.log('owner',getTodoByOwnerId('b74d697b-1089-4462-a13c-92e8b442f584'))
+  // console.log('user',getUser())
+  // // console.log('details',getUserById('3'))
+  // console.log('category',getCategory())
 
 
  }, [])

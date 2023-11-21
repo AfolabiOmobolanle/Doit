@@ -25,7 +25,7 @@ const baseURL = API_BASE_URL;
         }
     };
 
-    export const getTodoByOwnerId = async (id: string) =>{
+    export const getTodoByOwnerId =  (id: string) =>{
 
         try
         {

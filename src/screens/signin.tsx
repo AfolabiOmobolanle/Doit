@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image, Dimensions, Alert} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import assets, {colors} from '../constants/app.constants';
 import ScreenContainer from '../components/screen-container';
 import TextBox from '../components/textbox';
@@ -8,7 +8,7 @@ import ClickableText from '../components/clickable-text';
 import Logo from '../components/logo';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-
+import { loginUser } from '../Api/auth';
 
 const validationSchema = yup.object().shape({
   email: yup.string().required('email is required'),
@@ -28,9 +28,18 @@ const Signin = ({navigation}) => {
     email:'',
     password:''
   }
+  useEffect(()=>{
+    console.log('user logged in', loginUser({email:'email',password:'password'}));
+  },[])
 
-  const onSignIn = () => {
-    Alert.alert('Signed In successsfully');
+  const onSignIn = async (values: any) => {
+
+    const response = await loginUser(values)
+    console.log(response)
+
+    // Alert.alert('Signed In successsfully');
+    console.log(values)
+
   };
   const homeScreen = ()=>{
     navigation.navigate('LandingPage')
@@ -42,6 +51,8 @@ const Signin = ({navigation}) => {
   const iconPressed = () =>{
     setIsSecurePassword(!isSecurePassword);
   }
+
+
 
 
   return (

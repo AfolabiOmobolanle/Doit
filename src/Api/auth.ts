@@ -47,22 +47,29 @@ export const getUserById = async (id:string) =>{
 }
 
 
-// export const addUser = async () =>{
-
-//     try
-//     {
-//         console.log('bola',baseURL)
-//          axios.post(`${baseURL}/user`,{timeout:10000})
-//      .then(response => {
-//         console.log(response.data)
+export const loginUser = async ({email,password}) =>{
+        
+    try
+    {
+        console.log('bola',baseURL)
+         axios.post(`${baseURL}/user`,{email:email, password:password})
+     .then(response => {
+        console.log(response.data)
+        
+        if (!loginUser) {
+            console.log({message:'User does not exist'})
+        }
+        return response.data
   
-//      })
-//      .catch(error =>{
-//         console.log(error)
-//        }
-//        )
-//     }catch(error){
-//         throw error;
-//     }
-// }
+     })
+     .catch(error =>{
+        console.log(error)
+       }
+       )
+    }catch(error){
+        throw error;
+    }
+}
+
+
 
