@@ -4,12 +4,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Signin from '../screens/signin';
 import Signup from '../screens/signup';
 import Landing from '../screens/landing';
+import dashboard from '../screens/dashboard';
+import Dashboard from '../screens/dashboard';
 
 const Stack = createNativeStackNavigator();
 const Navigations = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='LandingPage'>
+      <Stack.Navigator initialRouteName="LandingPage">
         <Stack.Screen
           name="Signinpage"
           component={Signin}
@@ -25,9 +27,17 @@ const Navigations = () => {
             headerShown: false,
           }}
         />
-             <Stack.Screen
+        <Stack.Screen
           name="LandingPage"
           component={Landing}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
           options={{
             headerShown: false,
           }}

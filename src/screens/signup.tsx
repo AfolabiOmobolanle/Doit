@@ -9,7 +9,7 @@ import ClickableText from '../components/clickable-text';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import { getTodoByOwnerId, getTodos } from '../Api/api';
-import { getUser, getUserById } from '../Api/auth';
+import { addUser, getUser, getUserById } from '../Api/auth';
 import { getCategory } from '../Api/category';
 
 
@@ -62,7 +62,10 @@ const Signup = ({navigation}) => {
     setIsSecurePassword(!isSecurePassword);
   };
 
-  const onSignUp = () => {
+  const onSignUp = async (values: any) => {
+    console.log('signup here',values)
+
+    const response = await addUser(values)
     Alert.alert('Registered successfully');
   };
 
@@ -87,29 +90,29 @@ const Signup = ({navigation}) => {
             <>
               <TextBox
                 placeholder={'Username'}
-                onChangedText={handleChange('username')}
-                onBlur={handleBlur('username')}
+                onChangedText={handleChange('userName')}
+                onBlur={handleBlur('userName')}
                 value={values.userName}
                 textStyle={{
-                  borderColor: errors.email ? colors.red : colors.primary,
+                  borderColor: errors.userName ? colors.red : colors.primary,
                 }}
               />
               <TextBox
-                placeholder={'Username'}
-                onChangedText={handleChange('username')}
-                onBlur={handleBlur('username')}
-                value={values.userName}
+                placeholder={'Firstname'}
+                onChangedText={handleChange('firstName')}
+                onBlur={handleBlur('firstName')}
+                value={values.firstName}
                 textStyle={{
-                  borderColor: errors.email ? colors.red : colors.primary,
+                  borderColor: errors.firstName ? colors.red : colors.primary,
                 }}
               />
               <TextBox
-                placeholder={'Username'}
-                onChangedText={handleChange('username')}
-                onBlur={handleBlur('username')}
-                value={values.userName}
+                placeholder={'LastName'}
+                onChangedText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+                value={values.lastName}
                 textStyle={{
-                  borderColor: errors.email ? colors.red : colors.primary,
+                  borderColor: errors.lastName ? colors.red : colors.primary,
                 }}
               />
               <TextBox
